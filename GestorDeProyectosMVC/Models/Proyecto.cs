@@ -15,6 +15,6 @@ namespace GestorDeProyectosMVC.Models
         public string Titulo { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
         public bool EsVisible { get; set; }
-        // virtual ICollection<Usuario> Usuarios { get; set; }
+        //public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

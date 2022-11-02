@@ -14,6 +14,7 @@ namespace GestorDeProyectosMVC.Models
 
         public int Id { get; set; }
         public string Nombre { get; set; }
+        [Display(Name = "Contraseña")]
         public string Contrasenia { get; set; }
         //public  virtual ICollection<Proyecto> Proyectos { get; set; }
 
