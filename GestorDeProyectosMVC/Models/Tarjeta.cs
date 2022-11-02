@@ -13,5 +13,8 @@ namespace GestorDeProyectosMVC.Models
         public string Contenido { get; set; }
         public string Usuario { get; set; }
         public List<Campo> campos { get; set; }
+
+        public int ProyectoId { get; set; }
+        public virtual Proyecto Proyecto { get; set; }
     }
 }

@@ -9,11 +9,12 @@ namespace GestorDeProyectosMVC.Models
 {
     public class Proyecto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
+       
         public int Id { get; set; }
         public string Titulo { get; set; }
-        public List<Tarjeta> tarjetas { get; set; }
+        public List<Tarjeta> Tarjetas { get; set; }
         public bool EsVisible { get; set; }
+        // virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }
