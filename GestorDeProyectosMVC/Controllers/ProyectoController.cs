@@ -149,5 +149,11 @@ namespace GestorDeProyectosMVC.Controllers
         {
             return _context.proyectos.Any(e => e.Id == id);
         }
+
+        public IActionResult CreateTarjeta(int? id)
+        {
+            return RedirectToAction("Create","Tarjeta",new { idProyecto = id });
+        }
+
     }
 }

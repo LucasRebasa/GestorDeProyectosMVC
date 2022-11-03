@@ -10,23 +10,23 @@ using GestorDeProyectosMVC.Models;
 
 namespace GestorDeProyectosMVC.Controllers
 {
-    public class TarjetaController : Controller
+    public class CampoController : Controller
     {
         private readonly GestorProyectosDBContext _context;
 
-        public TarjetaController(GestorProyectosDBContext context)
+        public CampoController(GestorProyectosDBContext context)
         {
             _context = context;
         }
 
-        // GET: Tarjeta
+        // GET: Campo
         public async Task<IActionResult> Index()
         {
-            var gestorProyectosDBContext = _context.tarjetas.Include(t => t.Proyecto).Include(t => t.Usuario);
+            var gestorProyectosDBContext = _context.campos.Include(c => c.Tarjeta);
             return View(await gestorProyectosDBContext.ToListAsync());
         }
 
-        // GET: Tarjeta/Details/5
+        // GET: Campo/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,52 +34,42 @@ namespace GestorDeProyectosMVC.Controllers
                 return NotFound();
             }
 
-            var tarjeta = await _context.tarjetas
-                .Include(t => t.Proyecto)
-                .Include(t => t.Usuario)
+            var campo = await _context.campos
+                .Include(c => c.Tarjeta)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tarjeta == null)
+            if (campo == null)
             {
                 return NotFound();
             }
 
-            return View(tarjeta);
+            return View(campo);
         }
 
-        // GET: Tarjeta/Create
-        //public IActionResult Create()
-        //{
-        //    ViewData["ProyectoId"] = new SelectList(_context.proyectos, "Id", "Id");
-        //    ViewData["UsuarioId"] = new SelectList(_context.usuarios, "Id", "Id");
-        //    return View();
-        //}
-        public IActionResult Create(int idProyecto)
+        // GET: Campo/Create
+        public IActionResult Create()
         {
-            ViewData["ProyectoId"] = new SelectList(_context.proyectos, "Id", "Id");
-            ViewData["UsuarioId"] = new SelectList(_context.usuarios, "Id", "Id");
-            ViewBag.ProyectosId = idProyecto;
+            ViewData["TarjetaId"] = new SelectList(_context.tarjetas, "Id", "Id");
             return View();
         }
 
-        // POST: Tarjeta/Create
+        // POST: Campo/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Contenido,UsuarioId,ProyectoId")] Tarjeta tarjeta)
+        public async Task<IActionResult> Create([Bind("Id,Tipo,Contenido,Usuario,TarjetaId")] Campo campo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tarjeta);
+                _context.Add(campo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProyectoId"] = new SelectList(_context.proyectos, "Id", "Id", tarjeta.ProyectoId);
-            ViewData["UsuarioId"] = new SelectList(_context.usuarios, "Id", "Id", tarjeta.UsuarioId);
-            return View(tarjeta);
+            ViewData["TarjetaId"] = new SelectList(_context.tarjetas, "Id", "Id", campo.TarjetaId);
+            return View(campo);
         }
 
-        // GET: Tarjeta/Edit/5
+        // GET: Campo/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,24 +77,23 @@ namespace GestorDeProyectosMVC.Controllers
                 return NotFound();
             }
 
-            var tarjeta = await _context.tarjetas.FindAsync(id);
-            if (tarjeta == null)
+            var campo = await _context.campos.FindAsync(id);
+            if (campo == null)
             {
                 return NotFound();
             }
-            ViewData["ProyectoId"] = new SelectList(_context.proyectos, "Id", "Id", tarjeta.ProyectoId);
-            ViewData["UsuarioId"] = new SelectList(_context.usuarios, "Id", "Id", tarjeta.UsuarioId);
-            return View(tarjeta);
+            ViewData["TarjetaId"] = new SelectList(_context.tarjetas, "Id", "Id", campo.TarjetaId);
+            return View(campo);
         }
 
-        // POST: Tarjeta/Edit/5
+        // POST: Campo/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Contenido,UsuarioId,ProyectoId")] Tarjeta tarjeta)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo,Contenido,Usuario,TarjetaId")] Campo campo)
         {
-            if (id != tarjeta.Id)
+            if (id != campo.Id)
             {
                 return NotFound();
             }
@@ -113,12 +102,12 @@ namespace GestorDeProyectosMVC.Controllers
             {
                 try
                 {
-                    _context.Update(tarjeta);
+                    _context.Update(campo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TarjetaExists(tarjeta.Id))
+                    if (!CampoExists(campo.Id))
                     {
                         return NotFound();
                     }
@@ -129,12 +118,11 @@ namespace GestorDeProyectosMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProyectoId"] = new SelectList(_context.proyectos, "Id", "Id", tarjeta.ProyectoId);
-            ViewData["UsuarioId"] = new SelectList(_context.usuarios, "Id", "Id", tarjeta.UsuarioId);
-            return View(tarjeta);
+            ViewData["TarjetaId"] = new SelectList(_context.tarjetas, "Id", "Id", campo.TarjetaId);
+            return View(campo);
         }
 
-        // GET: Tarjeta/Delete/5
+        // GET: Campo/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,32 +130,31 @@ namespace GestorDeProyectosMVC.Controllers
                 return NotFound();
             }
 
-            var tarjeta = await _context.tarjetas
-                .Include(t => t.Proyecto)
-                .Include(t => t.Usuario)
+            var campo = await _context.campos
+                .Include(c => c.Tarjeta)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tarjeta == null)
+            if (campo == null)
             {
                 return NotFound();
             }
 
-            return View(tarjeta);
+            return View(campo);
         }
 
-        // POST: Tarjeta/Delete/5
+        // POST: Campo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tarjeta = await _context.tarjetas.FindAsync(id);
-            _context.tarjetas.Remove(tarjeta);
+            var campo = await _context.campos.FindAsync(id);
+            _context.campos.Remove(campo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TarjetaExists(int id)
+        private bool CampoExists(int id)
         {
-            return _context.tarjetas.Any(e => e.Id == id);
+            return _context.campos.Any(e => e.Id == id);
         }
     }
 }
