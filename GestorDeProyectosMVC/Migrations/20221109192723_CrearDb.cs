@@ -2,7 +2,7 @@
 
 namespace GestorDeProyectosMVC.Migrations
 {
-    public partial class CrearDB : Migration
+    public partial class CrearDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,7 +42,7 @@ namespace GestorDeProyectosMVC.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(nullable: true),
                     Contenido = table.Column<string>(nullable: true),
-                    Usuario = table.Column<string>(nullable: true),
+                    UsuarioId = table.Column<int>(nullable: false),
                     ProyectoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -52,6 +52,12 @@ namespace GestorDeProyectosMVC.Migrations
                         name: "FK_tarjetas_proyectos_ProyectoId",
                         column: x => x.ProyectoId,
                         principalTable: "proyectos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tarjetas_usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -87,6 +93,11 @@ namespace GestorDeProyectosMVC.Migrations
                 name: "IX_tarjetas_ProyectoId",
                 table: "tarjetas",
                 column: "ProyectoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tarjetas_UsuarioId",
+                table: "tarjetas",
+                column: "UsuarioId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -95,13 +106,13 @@ namespace GestorDeProyectosMVC.Migrations
                 name: "campos");
 
             migrationBuilder.DropTable(
-                name: "usuarios");
-
-            migrationBuilder.DropTable(
                 name: "tarjetas");
 
             migrationBuilder.DropTable(
                 name: "proyectos");
+
+            migrationBuilder.DropTable(
+                name: "usuarios");
         }
     }
 }

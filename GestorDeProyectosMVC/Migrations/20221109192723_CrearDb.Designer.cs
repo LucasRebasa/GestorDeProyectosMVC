@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestorDeProyectosMVC.Migrations
 {
     [DbContext(typeof(GestorProyectosDBContext))]
-    [Migration("20221102224413_CrearDB3")]
-    partial class CrearDB3
+    [Migration("20221109192723_CrearDb")]
+    partial class CrearDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
