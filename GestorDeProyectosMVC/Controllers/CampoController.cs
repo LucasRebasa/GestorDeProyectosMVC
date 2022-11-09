@@ -46,9 +46,11 @@ namespace GestorDeProyectosMVC.Controllers
         }
 
         // GET: Campo/Create
-        public IActionResult Create()
+        public IActionResult Create(int idTarjeta)
         {
-            ViewData["TarjetaId"] = new SelectList(_context.tarjetas, "Id", "Id");
+            //ViewData["TarjetaId"] = new SelectList(_context.tarjetas, "Id", "Id");
+            ViewBag.TarjetaId = idTarjeta;
+            ViewBag.Tipos = new SelectList(Enum.GetValues(typeof(TipoTarjeta)));
             return View();
         }
 

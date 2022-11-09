@@ -55,10 +55,14 @@ namespace GestorDeProyectosMVC.Controllers
         //}
         public IActionResult Create(int idProyecto)
         {
-            ViewData["ProyectoId"] = new SelectList(_context.proyectos, "Id", "Id");
-            ViewData["UsuarioId"] = new SelectList(_context.usuarios, "Id", "Id");
+            ViewData["UsuarioId"] = new SelectList(_context.usuarios, "Id", "Nombre");
             ViewBag.ProyectosId = idProyecto;
             return View();
+        }
+
+        public IActionResult CreateCampo(int id)
+        {
+            return RedirectToAction("Create", "Campo", new { idTarjeta = id });
         }
 
         // POST: Tarjeta/Create

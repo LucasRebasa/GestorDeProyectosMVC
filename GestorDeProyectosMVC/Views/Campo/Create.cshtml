@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Tipo" class="control-label"></label>
-                <select asp-for="Tipo" class="form-control"></select>
+                <select asp-for="Tipo" asp-items="@ViewBag.Tipos" class="form-control"></select>
                 <span asp-validation-for="Tipo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,7 +29,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="TarjetaId" class="control-label"></label>
-                <select asp-for="TarjetaId" class ="form-control" asp-items="ViewBag.TarjetaId"></select>
+                <input asp-for="TarjetaId" class="form-control" value="@ViewBag.TarjetaId" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

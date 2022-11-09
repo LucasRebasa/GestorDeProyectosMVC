@@ -13,6 +13,8 @@ namespace GestorDeProyectosMVC.Context
         {
 
         }
+
+
         public DbSet<Proyecto> proyectos { get; set; }
         public DbSet<Tarjeta> tarjetas { get; set; }
         public DbSet<Campo> campos { get; set; }
