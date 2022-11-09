@@ -3,14 +3,16 @@ using GestorDeProyectosMVC.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestorDeProyectosMVC.Migrations
 {
     [DbContext(typeof(GestorProyectosDBContext))]
-    partial class GestorProyectosDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221109195711_RelacionProyectoUsuario")]
+    partial class RelacionProyectoUsuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

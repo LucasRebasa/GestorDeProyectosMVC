@@ -14,6 +14,20 @@ namespace GestorDeProyectosMVC.Context
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UsuarioProyecto>()
+                .HasKey(up => new { up.UsuarioId, up.ProyectoId });
+            modelBuilder.Entity<UsuarioProyecto>()
+                .HasOne(up => up.Proyecto)
+                .WithMany(p => p.UsuariosProyectos)
+                .HasForeignKey(up => up.ProyectoId);
+            modelBuilder.Entity<UsuarioProyecto>()
+                .HasOne(up => up.Usuario)
+                .WithMany(u => u.UsuariosProyectos)
+                .HasForeignKey(up => up.UsuarioId);
+        }
+
 
         public DbSet<Proyecto> proyectos { get; set; }
         public DbSet<Tarjeta> tarjetas { get; set; }
