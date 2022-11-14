@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GestorDeProyectosMVC.Context;
 using GestorDeProyectosMVC.Models;
+using GestorDeProyectosMVC.ViewModels;
 
 namespace GestorDeProyectosMVC.Controllers
 {
@@ -24,7 +25,7 @@ namespace GestorDeProyectosMVC.Controllers
         {
             return View(await _context.proyectos.ToListAsync());
         }
-
+        
         // GET: Proyecto/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,6 +47,7 @@ namespace GestorDeProyectosMVC.Controllers
         // GET: Proyecto/Create
         public IActionResult Create()
         {
+            ViewBag.usuarios = new MultiSelectList(_context.usuarios, "Id", "Nombre");
             return View();
         }
 
@@ -56,9 +58,21 @@ namespace GestorDeProyectosMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Titulo,EsVisible")] Proyecto proyecto)
         {
+
             if (ModelState.IsValid)
             {
+                /*
                 _context.Add(proyecto);
+                foreach (var usuarioId in vistaProyecto.Usuarios)
+                {
+                    var z = proyecto;
+                    var up = new UsuarioProyecto(usuarioId, 2);
+
+                }
+                var usuariosDb = _context.usuarioProyectos.Where(up => up.ProyectoId == 2);
+                */
+                //TODO: Crear el proyecto sin usuarios asociados y crear un boton de añadir usuarios a un proyecto
+                _context.proyectos.Add(proyecto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -68,17 +82,26 @@ namespace GestorDeProyectosMVC.Controllers
         // GET: Proyecto/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.usuarios = new MultiSelectList(_context.usuarios, "Id", "Nombre");
             if (id == null)
             {
                 return NotFound();
             }
 
             var proyecto = await _context.proyectos.FindAsync(id);
+            var vista = new ViewProyecto
+            {
+                Id = proyecto.Id,
+                Titulo = proyecto.Titulo,
+                EsVisible = proyecto.EsVisible,
+                Tarjetas = proyecto.Tarjetas,
+                usuarioProyecto = proyecto.UsuariosProyectos
+            };
             if (proyecto == null)
             {
                 return NotFound();
             }
-            return View(proyecto);
+            return View(vista);
         }
 
         // POST: Proyecto/Edit/5
@@ -86,8 +109,19 @@ namespace GestorDeProyectosMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,EsVisible")] Proyecto proyecto)
+        public async Task<IActionResult> Edit(int id, ViewProyecto vistaProyecto)
         {
+            Proyecto proyecto = new Proyecto
+            {
+                Id = vistaProyecto.Id,
+                Titulo = vistaProyecto.Titulo,
+                EsVisible = vistaProyecto.EsVisible
+            };
+
+            foreach (var usuarioId in vistaProyecto.Usuarios)
+            {
+                _context.usuarioProyectos.Add(new UsuarioProyecto(usuarioId,id));
+            }
             if (id != proyecto.Id)
             {
                 return NotFound();

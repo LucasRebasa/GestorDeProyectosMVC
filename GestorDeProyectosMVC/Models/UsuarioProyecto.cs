@@ -12,5 +12,15 @@ namespace GestorDeProyectosMVC.Models
         public Usuario Usuario { get; set; }
         public int ProyectoId { get; set; }
         public Proyecto Proyecto { get; set; }
+
+        public UsuarioProyecto(int usuarioId, int proyectoId)
+        {
+            UsuarioId = usuarioId;
+            ProyectoId = proyectoId;
+        }
+
     }
+
+    
+
 }
