@@ -111,6 +111,7 @@ namespace GestorDeProyectosMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ViewProyecto vistaProyecto)
         {
+            //TODO: mostrar los usuarios que ya estan en el proyecto y excluirlos de la seleccion
             Proyecto proyecto = new Proyecto
             {
                 Id = vistaProyecto.Id,
