@@ -118,7 +118,7 @@ namespace GestorDeProyectosMVC.Controllers
                 Titulo = vistaProyecto.Titulo,
                 EsVisible = vistaProyecto.EsVisible
             };
-            if(vistaProyecto.Usuarios.Count > 0)
+            if(vistaProyecto.Usuarios != null)
             {
                 foreach (var usuarioId in vistaProyecto.Usuarios)
                 {
