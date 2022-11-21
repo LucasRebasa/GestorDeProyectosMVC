@@ -52,7 +52,6 @@ namespace GestorDeProyectosMVC.Controllers
         // GET: Proyecto/Create
         public IActionResult Create()
         {
-            ViewBag.usuarios = new MultiSelectList(_context.usuarios, "Id", "Nombre");
             return View();
         }
 
@@ -66,18 +65,11 @@ namespace GestorDeProyectosMVC.Controllers
 
             if (ModelState.IsValid)
             {
-                /*
-                _context.Add(proyecto);
-                foreach (var usuarioId in vistaProyecto.Usuarios)
-                {
-                    var z = proyecto;
-                    var up = new UsuarioProyecto(usuarioId, 2);
-
-                }
-                var usuariosDb = _context.usuarioProyectos.Where(up => up.ProyectoId == 2);
-                */
-                //TODO: Crear el proyecto sin usuarios asociados y crear un boton de añadir usuarios a un proyecto
-                _context.proyectos.Add(proyecto);
+                var nomSession = HttpContext.Session.GetString("Usuario");
+                var usuario = _context.usuarios.First(u => u.Nombre == nomSession);
+                var proyectoDB = _context.proyectos.Add(proyecto);
+                await _context.SaveChangesAsync();
+                _context.usuarioProyectos.Add(new UsuarioProyecto(usuario.Id, proyectoDB.Entity.Id));
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
