@@ -1,5 +1,6 @@
 ﻿using GestorDeProyectosMVC.Context;
 using GestorDeProyectosMVC.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,6 +23,7 @@ namespace GestorDeProyectosMVC.Controllers
         }
         public IActionResult Index()
         {
+            //string nomusuario = HttpContext.Session.GetString("Usuario");
             return View();
         }
 
@@ -36,11 +38,13 @@ namespace GestorDeProyectosMVC.Controllers
             {
                 return RedirectToAction("Index");
             }
+            HttpContext.Session.SetString("Usuario", usuario.Nombre);
             return RedirectToAction("Index","Proyecto");
         }
 
         public IActionResult Crear()
         {
+            //string nomusuario = HttpContext.Session.GetString("Usuario");
             return View();
         }
 
@@ -53,6 +57,7 @@ namespace GestorDeProyectosMVC.Controllers
             }
             _context.usuarios.Add(usuario);
             await _context.SaveChangesAsync();
+            HttpContext.Session.SetString("Usuario", usuario.Nombre);
             return RedirectToAction("Index","Proyecto");
         }
 

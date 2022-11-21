@@ -28,6 +28,8 @@ namespace GestorDeProyectosMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
+            services.AddMvc();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for nonessential cookies is needed for a given request.
@@ -40,8 +42,11 @@ namespace GestorDeProyectosMVC
             services.AddMvc().AddNewtonsoftJson(options =>
            options.SerializerSettings.ReferenceLoopHandling =
            ReferenceLoopHandling.Ignore)
-
            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+           services.AddSession(options =>
+           {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+           });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +68,7 @@ namespace GestorDeProyectosMVC
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

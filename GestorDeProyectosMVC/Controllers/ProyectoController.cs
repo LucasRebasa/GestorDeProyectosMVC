@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GestorDeProyectosMVC.Context;
 using GestorDeProyectosMVC.Models;
 using GestorDeProyectosMVC.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace GestorDeProyectosMVC.Controllers
 {
@@ -23,7 +24,11 @@ namespace GestorDeProyectosMVC.Controllers
         // GET: Proyecto
         public async Task<IActionResult> Index()
         {
-            return View(await _context.proyectos.ToListAsync());
+            string nomusuario = HttpContext.Session.GetString("Usuario");
+            var ups = _context.usuarioProyectos.Where(up => up.Usuario.Nombre == nomusuario).Select(up => up.ProyectoId).ToList();
+            var list = await _context.proyectos.Where(p => ups.Contains(p.Id)).ToListAsync();
+
+            return View(list);
         }
         
         // GET: Proyecto/Details/5
