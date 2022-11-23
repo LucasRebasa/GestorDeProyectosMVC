@@ -189,5 +189,21 @@ namespace GestorDeProyectosMVC.Controllers
             return RedirectToAction("Create","Tarjeta",new { idProyecto = id });
         }
 
+        public async Task<IActionResult> Abrir(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            Proyecto proyecto = await _context.proyectos.FindAsync(id);
+            List<Tarjeta> tarjetas = _context.tarjetas.Where(t => t.ProyectoId == id).ToList();
+            proyecto.Tarjetas = tarjetas;
+            foreach(var tarjeta in proyecto.Tarjetas)
+            {
+                tarjeta.Campos = _context.campos.Where(c => c.TarjetaId == tarjeta.Id).ToList();
+            }
+            return View(proyecto);
+        }
+
     }
 }

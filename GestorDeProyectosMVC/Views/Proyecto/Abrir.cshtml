@@ -1,0 +1,74 @@
+﻿@model GestorDeProyectosMVC.Models.Proyecto
+
+@{
+    ViewData["Title"] = "Abrir";
+}
+
+<h1>Proyecto</h1>
+<div class="container">
+    @{ foreach (var tarjeta in Model.Tarjetas)
+        {
+            <div class="tarjeta">
+                @Html.DisplayFor(model => tarjeta.Titulo)
+                @{ foreach (var campo in tarjeta.Campos)
+                    {
+                        <div class="campo">
+                            @Html.DisplayFor(model => campo.Contenido)
+                        </div>
+                    }
+                    <div class="campo">
+                        <a asp-controller="Tarjeta" asp-action="CreateCampo" asp-route-id="@tarjeta.Id">Añadir campo +</a>
+                    </div>
+                }
+            </div>
+        }
+        <div class="tarjeta">
+            <a  asp-action="CreateTarjeta" asp-route-id="@Model.Id">Añadir tarjeta +</a>   
+        </div>
+    }
+</div>
+<style>
+    .tarjeta{
+        background-color: #cec;
+        margin: 20px;
+        padding: 10px;
+    }
+    .campo{
+        background-color: #bac;
+        padding: 10px;
+    }
+    .container{
+        display: flex;
+        justify-content: space-evenly;
+    }
+</style>
+<!--<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                Html.DisplayNameFor(model => model.EsVisible)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+foreach (var item in Model) {
+        <tr>
+            <td>
+                Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                Html.DisplayFor(modelItem => item.EsVisible)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>-->
