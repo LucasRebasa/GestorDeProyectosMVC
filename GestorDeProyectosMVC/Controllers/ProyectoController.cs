@@ -30,8 +30,9 @@ namespace GestorDeProyectosMVC.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
+            //Se seleccionan todos los Id's de los proyectos donde este el usuario
             var ups = _context.usuarioProyectos.Where(up => up.Usuario.Nombre == nomusuario).Select(up => up.ProyectoId).ToList();
+            //Se filtran todos los proyectos seleccionando solo los proyectos (objeto Proyecto) donde este el usuario
             var list = await _context.proyectos.Where(p => ups.Contains(p.Id)).ToListAsync();
 
             return View(list);
@@ -85,13 +86,16 @@ namespace GestorDeProyectosMVC.Controllers
         // GET: Proyecto/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            ViewBag.usuarios = new MultiSelectList(_context.usuarios, "Id", "Nombre");
             if (id == null)
             {
                 return NotFound();
             }
-
+            //Seleccionar todos los usuarios del proyecto
+            var usuariosDelProyecto = _context.usuarioProyectos.Where(up => up.ProyectoId == id).Select(up => up.UsuarioId);
             var proyecto = await _context.proyectos.FindAsync(id);
+            //Filtra los usuarios eliminando los que ya pertenezcan al proyecto y mostrando todos los demas
+            var usuariosAMostrar =  _context.usuarios.Where(u => !usuariosDelProyecto.Contains(u.Id)).ToList();
+            ViewBag.usuarios = new MultiSelectList(usuariosAMostrar, "Id", "Nombre");
             var vista = new ViewProyecto
             {
                 Id = proyecto.Id,
