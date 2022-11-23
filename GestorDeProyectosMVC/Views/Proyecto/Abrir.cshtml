@@ -5,7 +5,7 @@
 }
 
 <h1>Proyecto</h1>
-<div class="container">
+<div class="container-proyecto">
     @{ foreach (var tarjeta in Model.Tarjetas)
         {
             <div class="tarjeta">
@@ -23,25 +23,11 @@
             </div>
         }
         <div class="tarjeta">
-            <a  asp-action="CreateTarjeta" asp-route-id="@Model.Id">Añadir tarjeta +</a>   
+            <a asp-action="CreateTarjeta" asp-route-id="@Model.Id">Añadir tarjeta +</a>
         </div>
     }
 </div>
-<style>
-    .tarjeta{
-        background-color: #cec;
-        margin: 20px;
-        padding: 10px;
-    }
-    .campo{
-        background-color: #bac;
-        padding: 10px;
-    }
-    .container{
-        display: flex;
-        justify-content: space-evenly;
-    }
-</style>
+
 <!--<table class="table">
     <thead>
         <tr>

@@ -1,0 +1,15 @@
+﻿body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fefade;
+
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+    height: 100%;
+    margin: 0 auto;
+    background-color: #fefade;
+}

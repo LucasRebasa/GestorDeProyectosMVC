@@ -23,7 +23,7 @@ namespace GestorDeProyectosMVC.Controllers
         }
         public IActionResult Index()
         {
-            //string nomusuario = HttpContext.Session.GetString("Usuario");
+            HttpContext.Session.SetString("Usuario", "");
             return View();
         }
 
@@ -44,7 +44,6 @@ namespace GestorDeProyectosMVC.Controllers
 
         public IActionResult Crear()
         {
-            //string nomusuario = HttpContext.Session.GetString("Usuario");
             return View();
         }
 

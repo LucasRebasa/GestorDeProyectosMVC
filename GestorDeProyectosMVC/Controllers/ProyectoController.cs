@@ -24,7 +24,13 @@ namespace GestorDeProyectosMVC.Controllers
         // GET: Proyecto
         public async Task<IActionResult> Index()
         {
+            
             string nomusuario = HttpContext.Session.GetString("Usuario");
+            if(nomusuario == "")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
             var ups = _context.usuarioProyectos.Where(up => up.Usuario.Nombre == nomusuario).Select(up => up.ProyectoId).ToList();
             var list = await _context.proyectos.Where(p => ups.Contains(p.Id)).ToListAsync();
 

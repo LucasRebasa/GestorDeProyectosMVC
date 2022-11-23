@@ -1,0 +1,30 @@
+﻿body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fefade;
+}
+.tarjeta {
+    background-color: #114B5F;
+    margin: 20px;
+    padding: 10px;
+    color: #E4FDE1;
+    width: 25%;
+}
+
+.campo {
+    background-color: #119DA4;
+    padding: 10px;
+    color: #E4FDE1;
+    margin: 5px;
+}
+
+.container-proyecto {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.container-nav {
+    background-color: #cf2c3b;
+}
+
+

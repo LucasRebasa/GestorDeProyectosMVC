@@ -3,17 +3,27 @@
 }
 @model Usuario
 
+@{ 
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
 <div class="form-container">
-    <h4>Ingresar</h4>
+    <h2>Ingresar</h2>
     <form asp-action="Ingresar">
         <label asp-for="Nombre">Usuario</label>
         <input asp-for="Nombre" type="text" placeholder="Ingrese el nombre de usuario" class="form-control" />
         <label asp-for="Contrasenia">Contraseña</label>
         <input asp-for="Contrasenia" type="password" placeholder="Ingrese la contraseña" class="form-control" />
-        <input type="submit" value="Ingresar" class="btn btn-primary" />
+        <button type="submit" class="btn btn-primary">Ingresar</button>
     </form>
     <div>
         <h5>¿No tenes cuenta? Crea una</h5>
         <a asp-action="Crear" class="btn btn-success">Crear Cuenta</a>
     </div>
 </div>
+
