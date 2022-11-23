@@ -1,6 +1,21 @@
-﻿@model Usuario
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
 
-<div>
+@model Usuario
+
+
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
+
+<div class="form-container">
     <h4>Crear Usuario</h4>
     <form asp-action="Crear" method="post">
         <label asp-for="Nombre">Usuario</label>

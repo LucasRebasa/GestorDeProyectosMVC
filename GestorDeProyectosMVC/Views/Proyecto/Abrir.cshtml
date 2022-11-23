@@ -8,19 +8,26 @@
 <div class="container-proyecto">
     @{ foreach (var tarjeta in Model.Tarjetas)
         {
-            <div class="tarjeta">
-                @Html.DisplayFor(model => tarjeta.Titulo)
-                @{ foreach (var campo in tarjeta.Campos)
-                    {
+        <div class="tarjeta">
+            @Html.DisplayFor(model => tarjeta.Titulo)
+            @{ foreach (var campo in tarjeta.Campos)
+                {
                         <div class="campo">
                             @Html.DisplayFor(model => campo.Contenido)
+                            <a asp-controller="Campo" asp-action="Edit" asp-route-id="@campo.Id">Editar</a>
+                            <a asp-controller="Campo" asp-action="Delete" asp-route-id="@campo.Id">Eliminar</a>
                         </div>
-                    }
-                    <div class="campo">
-                        <a asp-controller="Tarjeta" asp-action="CreateCampo" asp-route-id="@tarjeta.Id">Añadir campo +</a>
-                    </div>
+         
                 }
+                <div class="campo">
+                    <a asp-controller="Tarjeta" asp-action="CreateCampo" asp-route-id="@tarjeta.Id">Añadir campo +</a>
+                </div>
+            }
+            <div>
+                <a asp-controller="Tarjeta" asp-action="Edit" asp-route-id="@tarjeta.Id">Editar</a>
+                <a asp-controller="Tarjeta" asp-action="Delete" asp-route-id="@tarjeta.Id">Eliminar</a>
             </div>
+        </div>
         }
         <div class="tarjeta">
             <a asp-action="CreateTarjeta" asp-route-id="@Model.Id">Añadir tarjeta +</a>

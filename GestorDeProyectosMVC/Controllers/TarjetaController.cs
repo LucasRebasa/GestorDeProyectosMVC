@@ -76,11 +76,12 @@ namespace GestorDeProyectosMVC.Controllers
             {
                 _context.Add(tarjeta);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //
+                return RedirectToAction("Abrir", "Proyecto", new { id = tarjeta.ProyectoId });
             }
             ViewData["ProyectoId"] = new SelectList(_context.proyectos, "Id", "Id", tarjeta.ProyectoId);
             ViewData["UsuarioId"] = new SelectList(_context.usuarios, "Id", "Id", tarjeta.UsuarioId);
-            return View(tarjeta);
+            return RedirectToAction("Proyecto", "Abrir", new { id = tarjeta.ProyectoId });
         }
 
         // GET: Tarjeta/Edit/5
@@ -131,11 +132,11 @@ namespace GestorDeProyectosMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Abrir", "Proyecto", new { id = tarjeta.ProyectoId });
             }
             ViewData["ProyectoId"] = new SelectList(_context.proyectos, "Id", "Id", tarjeta.ProyectoId);
             ViewData["UsuarioId"] = new SelectList(_context.usuarios, "Id", "Id", tarjeta.UsuarioId);
-            return View(tarjeta);
+            return RedirectToAction("Abrir", "Proyecto", new { id = tarjeta.ProyectoId });
         }
 
         // GET: Tarjeta/Delete/5
@@ -166,7 +167,7 @@ namespace GestorDeProyectosMVC.Controllers
             var tarjeta = await _context.tarjetas.FindAsync(id);
             _context.tarjetas.Remove(tarjeta);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Abrir", "Proyecto", new { id = tarjeta.ProyectoId });
         }
 
         private bool TarjetaExists(int id)

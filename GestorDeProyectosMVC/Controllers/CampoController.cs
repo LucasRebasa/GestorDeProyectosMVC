@@ -65,7 +65,8 @@ namespace GestorDeProyectosMVC.Controllers
             {
                 _context.Add(campo);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var tarjeta =  await _context.tarjetas.FindAsync(campo.TarjetaId);
+                return RedirectToAction("Abrir", "Proyecto", new { id = tarjeta.ProyectoId });
             }
             ViewData["TarjetaId"] = new SelectList(_context.tarjetas, "Id", "Id", campo.TarjetaId);
             return View(campo);
@@ -78,12 +79,12 @@ namespace GestorDeProyectosMVC.Controllers
             {
                 return NotFound();
             }
-
             var campo = await _context.campos.FindAsync(id);
             if (campo == null)
             {
                 return NotFound();
             }
+            ViewBag.Tipos = new SelectList(Enum.GetValues(typeof(TipoTarjeta)));
             ViewData["TarjetaId"] = new SelectList(_context.tarjetas, "Id", "Id", campo.TarjetaId);
             return View(campo);
         }
@@ -118,7 +119,8 @@ namespace GestorDeProyectosMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                var tarjeta =  await _context.tarjetas.FindAsync(campo.TarjetaId);
+                return RedirectToAction("Abrir", "Proyecto", new { id = tarjeta.ProyectoId });
             }
             ViewData["TarjetaId"] = new SelectList(_context.tarjetas, "Id", "Id", campo.TarjetaId);
             return View(campo);
@@ -151,7 +153,8 @@ namespace GestorDeProyectosMVC.Controllers
             var campo = await _context.campos.FindAsync(id);
             _context.campos.Remove(campo);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var tarjeta = await _context.tarjetas.FindAsync(campo.TarjetaId);
+            return RedirectToAction("Abrir", "Proyecto", new { id = tarjeta.ProyectoId });
         }
 
         private bool CampoExists(int id)
