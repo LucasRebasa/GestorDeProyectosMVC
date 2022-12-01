@@ -14,54 +14,23 @@
                 {
                         <div class="campo">
                             @Html.DisplayFor(model => campo.Contenido)
-                            <a asp-controller="Campo" asp-action="Edit" asp-route-id="@campo.Id">Editar</a>
-                            <a asp-controller="Campo" asp-action="Delete" asp-route-id="@campo.Id">Eliminar</a>
+                            <a class="btn btn-success" asp-controller="Campo" asp-action="Edit" asp-route-id="@campo.Id">Editar</a>
+                            <a class="btn btn-danger" asp-controller="Campo" asp-action="Delete" asp-route-id="@campo.Id">Eliminar</a>
                         </div>
          
                 }
                 <div class="campo">
-                    <a asp-controller="Tarjeta" asp-action="CreateCampo" asp-route-id="@tarjeta.Id">Añadir campo +</a>
+                    <a asp-controller="Tarjeta" class="btn btn-primary" asp-action="CreateCampo" asp-route-id="@tarjeta.Id">Añadir campo +</a>
                 </div>
             }
             <div>
-                <a asp-controller="Tarjeta" asp-action="Edit" asp-route-id="@tarjeta.Id">Editar</a>
-                <a asp-controller="Tarjeta" asp-action="Delete" asp-route-id="@tarjeta.Id">Eliminar</a>
+                <a class="btn btn-success" asp-controller="Tarjeta" asp-action="Edit" asp-route-id="@tarjeta.Id">Editar</a>
+                <a class="btn btn-danger" asp-controller="Tarjeta" asp-action="Delete" asp-route-id="@tarjeta.Id">Eliminar</a>
             </div>
         </div>
         }
         <div class="tarjeta">
-            <a asp-action="CreateTarjeta" asp-route-id="@Model.Id">Añadir tarjeta +</a>
+            <a asp-action="CreateTarjeta" class="btn btn-primary" asp-route-id="@Model.Id">Añadir tarjeta +</a>
         </div>
     }
 </div>
-
-<!--<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Html.DisplayNameFor(model => model.Titulo)
-            </th>
-            <th>
-                Html.DisplayNameFor(model => model.EsVisible)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-foreach (var item in Model) {
-        <tr>
-            <td>
-                Html.DisplayFor(modelItem => item.Titulo)
-            </td>
-            <td>
-                Html.DisplayFor(modelItem => item.EsVisible)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>-->

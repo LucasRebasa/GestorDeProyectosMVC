@@ -1,0 +1,28 @@
+﻿@model GestorDeProyectosMVC.Models.Proyecto
+
+@{
+    ViewData["Title"] = "Abrir";
+}
+
+<h1>Proyecto</h1>
+<div class="container-proyecto">
+    @{ foreach (var tarjeta in Model.Tarjetas)
+        {
+        <div class="tarjeta">
+            @Html.DisplayFor(model => tarjeta.Titulo)
+            @{ foreach (var campo in tarjeta.Campos)
+                {
+                        <div class="campo">
+                            @Html.DisplayFor(model => campo.Contenido)
+                            
+                        </div>
+         
+                }
+              
+            }
+            
+        </div>
+        }
+       
+    }
+</div>

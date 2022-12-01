@@ -14,7 +14,8 @@ namespace GestorDeProyectosMVC.ViewModels
         public List<Tarjeta> Tarjetas { get; set; }
         public bool EsVisible { get; set; }
         public ICollection<UsuarioProyecto> usuarioProyecto { get; set; }
-        public List<int> Usuarios { get; set; }
+        public List<int> UsuariosId { get; set; }
+        public List<Usuario> usuarios { get; set; }
 
     }
 }

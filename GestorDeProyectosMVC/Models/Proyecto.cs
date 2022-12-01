@@ -14,6 +14,7 @@ namespace GestorDeProyectosMVC.Models
         public int Id { get; set; }
         public string Titulo { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
+        [Display(Name = "Publico")]
         public bool EsVisible { get; set; }
         public  ICollection<UsuarioProyecto> UsuariosProyectos { get; set; }
     }

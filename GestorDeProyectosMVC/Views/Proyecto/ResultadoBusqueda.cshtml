@@ -4,11 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">Tus proyectos</h1>
+<h1 class="text-center">Resultado de la busqueda</h1>
 
-<p>
-    <a class="btn btn-success" asp-action="Create">Crear nuevo proyecto</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -30,11 +27,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EsVisible)
             </td>
-            <td class="text-right">
-                <a class="btn btn-info" asp-action="Abrir" asp-route-id="@item.Id">Abrir</a> 
-                <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Editar</a> 
-                <a class="btn btn-danger"  asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
-            </td>
+            @{if (item.EsVisible)
+                {
+                    <td class="text-right">
+                        <a class="btn btn-info" asp-action="AbrirBusqueda" asp-route-id="@item.Id">Abrir</a> 
+                    </td>
+
+                }
+
+            }
         </tr>
 }
     </tbody>

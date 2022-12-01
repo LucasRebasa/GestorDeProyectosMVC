@@ -1,0 +1,13 @@
+﻿@model GestorDeProyectosMVC.ViewModels.VistaBusqueda
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">Buscar proyecto</h1>
+<form asp-action="ResultadoBusqueda" class="text-center mt-5">
+    <label asp-for="busqueda">Nombre del proyecto</label>
+    <input asp-for="busqueda" type="text" class="custom-control-inline"/>
+    <input type="submit" class="btn btn-info"/>
+</form>
+

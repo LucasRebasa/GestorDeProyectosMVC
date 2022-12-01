@@ -56,6 +56,18 @@ namespace GestorDeProyectosMVC.Controllers
             return View(proyecto);
         }
 
+        public IActionResult Buscar()
+        {
+
+            return View();
+        }
+
+        public IActionResult ResultadoBusqueda([Bind("busqueda")] VistaBusqueda vista)
+        {
+            var list =  _context.proyectos.Where(p => p.Titulo.Contains(vista.busqueda)).ToList();
+            return View(list);
+        }
+
         // GET: Proyecto/Create
         public IActionResult Create()
         {
@@ -102,7 +114,8 @@ namespace GestorDeProyectosMVC.Controllers
                 Titulo = proyecto.Titulo,
                 EsVisible = proyecto.EsVisible,
                 Tarjetas = proyecto.Tarjetas,
-                usuarioProyecto = proyecto.UsuariosProyectos
+                usuarioProyecto = proyecto.UsuariosProyectos,
+                usuarios = _context.usuarios.Where(u => usuariosDelProyecto.Contains(u.Id)).ToList()
             };
             if (proyecto == null)
             {
@@ -125,9 +138,9 @@ namespace GestorDeProyectosMVC.Controllers
                 Titulo = vistaProyecto.Titulo,
                 EsVisible = vistaProyecto.EsVisible
             };
-            if(vistaProyecto.Usuarios != null)
+            if(vistaProyecto.UsuariosId != null)
             {
-                foreach (var usuarioId in vistaProyecto.Usuarios)
+                foreach (var usuarioId in vistaProyecto.UsuariosId)
                 {
                     _context.usuarioProyectos.Add(new UsuarioProyecto(usuarioId,id));
                 }
@@ -205,7 +218,16 @@ namespace GestorDeProyectosMVC.Controllers
             {
                 return NotFound();
             }
+            var nomSession = HttpContext.Session.GetString("Usuario");
+            var usuario = _context.usuarios.First(u => u.Nombre == nomSession);
+            var idUsuariosDelProyecto = _context.usuarioProyectos.Where(up => up.ProyectoId == id).Select(up => up.UsuarioId);
+            if (!idUsuariosDelProyecto.Contains(usuario.Id))
+            {
+                return RedirectToAction("Index");
+            }
             Proyecto proyecto = await _context.proyectos.FindAsync(id);
+
+
             List<Tarjeta> tarjetas = _context.tarjetas.Where(t => t.ProyectoId == id).ToList();
             proyecto.Tarjetas = tarjetas;
             foreach(var tarjeta in proyecto.Tarjetas)
@@ -215,5 +237,41 @@ namespace GestorDeProyectosMVC.Controllers
             return View(proyecto);
         }
 
+        public async Task<IActionResult> AbrirBusqueda(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var nomSession = HttpContext.Session.GetString("Usuario");
+            var usuario = _context.usuarios.First(u => u.Nombre == nomSession);
+            var idUsuariosDelProyecto = _context.usuarioProyectos.Where(up => up.ProyectoId == id).Select(up => up.UsuarioId);
+            Proyecto proyecto = await _context.proyectos.FindAsync(id);
+            if (!idUsuariosDelProyecto.Contains(usuario.Id) && !proyecto.EsVisible)
+            {
+                return RedirectToAction("Index");
+            }
+            List<Tarjeta> tarjetas = _context.tarjetas.Where(t => t.ProyectoId == id).ToList();
+            proyecto.Tarjetas = tarjetas;
+            foreach (var tarjeta in proyecto.Tarjetas)
+            {
+                tarjeta.Campos = _context.campos.Where(c => c.TarjetaId == tarjeta.Id).ToList();
+            }
+            return View(proyecto);
+        }
+
+        public async Task<IActionResult> EliminarUsuarioDeProyecto(int? idProyecto, int? idUsuario)
+        {
+            if (idProyecto == null || idUsuario == null)
+            {
+                return NotFound();
+            }
+            var up = await _context.usuarioProyectos.FirstAsync(u => u.ProyectoId == idProyecto && u.UsuarioId == idUsuario);
+            _context.usuarioProyectos.Remove(up);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
     }
+
 }
